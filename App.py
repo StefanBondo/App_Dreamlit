@@ -6,13 +6,28 @@ def quiz_streamlit():
 
     # Spørgsmål 1
     st.subheader("1) Tal-spørgsmål")
+
+    if "forsøg_spg1" not in st.session_state:
+        st.session_state.forsøg_spg1 = 0
+
     korrekt_svar = 5
-    user_tal = st.number_input("Skriv det rigtige tal Hint(1-5):", step=1, format="%d")
-    if st.button("Tjek tal"):
+    er_låst = st.session_state.forsøg_spg1 >= 3
+
+    user_tal = st.number_input(
+        "Skriv det rigtige tal Hint(1-5):",
+        step=1,
+        format="%d",
+        disabled=er_låst
+    )
+    if st.button("Tjek tal", disabled=er_låst):
         if user_tal == korrekt_svar:
             st.success("Du har gættet korrekt")
         else:
-            st.error("Du har gættet forkert")
+            st.session_state.forsøg_spg1 = st.session_state.forsøg_spg1 + 1
+            st.error(f"Du har gættet forkert. Forsøg: {st.session_state.forsøg_spg1}/3")
+
+    if st.session_state.forsøg_spg1 >= 3:
+        st.error("Du har ikke flere forsøg")
 
     st.divider()
 
