@@ -84,5 +84,3 @@ def quiz_streamlit():
             st.error(f"Du har gættet forkert, det korrekte er {væreste_by}")
 
 quiz_streamlit()
-
-streamlit run "/Users/stefanbondo/Documents/DataAnalyseProjekter/Python - skole/Skole_test/App.py"
